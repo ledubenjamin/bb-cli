@@ -46,7 +46,7 @@ jobs:
           RUSTDOCFLAGS: -D warnings
       - uses: taiki-e/install-action@cfdb7ed4ccc7c7dce37759eae89dc5674b469b39 # v2.90.3
         with:
-          tool: cargo-audit@0.22.1,cargo-machete@0.9.2,actionlint@1.7.12
+          tool: cargo-audit@0.22.1,cargo-machete@0.9.2
           fallback: none
       - name: Audit dependencies
         run: cargo audit
@@ -54,7 +54,15 @@ jobs:
         run: cargo machete
       - name: Check workflow syntax
         # actionlint 1.7.12 predates GitHub's concurrency.queue property.
-        run: actionlint -ignore 'unexpected key "queue" for "concurrency" section'
+        run: |
+          actionlint_dir="$RUNNER_TEMP/actionlint-1.7.12"
+          mkdir -p "$actionlint_dir"
+          curl --fail --location --retry 3 --output "$actionlint_dir/actionlint.tar.gz" \
+            https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz
+          printf '%s  %s\n' '8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8' \
+            "$actionlint_dir/actionlint.tar.gz" | sha256sum --check
+          tar -xzf "$actionlint_dir/actionlint.tar.gz" -C "$actionlint_dir" actionlint
+          "$actionlint_dir/actionlint" -ignore 'unexpected key "queue" for "concurrency" section'
       - name: Test publication, packaging, and terminal harness
         run: |
           python3 scripts/test_publish.py
