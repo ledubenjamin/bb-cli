@@ -1,0 +1,4 @@
+# OAuth2 still uses base64 0.22; reqwest uses 0.23.
+# Serde-related and Clap procedural macros currently span syn 2 and 3.
+# The optional ring backend still resolves windows-sys 0.52 alongside 0.61.
+allowed-duplicate-crates = ["base64", "syn", "windows-sys"]

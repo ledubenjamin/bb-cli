@@ -1,0 +1,590 @@
+{
+  "description": "Anonymized public Bitbucket schema: two siblings, a rerun with an earlier trigger, and eight child steps. Names and UUIDs are synthetic.",
+  "runs": [
+    {
+      "type": "pipeline",
+      "uuid": "{00000000-0000-4000-8000-000000000180}",
+      "build_number": 180,
+      "run_number": 1,
+      "state": {
+        "name": "COMPLETED",
+        "result": {
+          "name": "SUCCESSFUL"
+        }
+      },
+      "target": {
+        "ref_name": "main"
+      },
+      "trigger": {
+        "type": "pipeline_trigger_push",
+        "name": "PUSH"
+      },
+      "created_on": "2026-09-08T08:00:00Z",
+      "completed_on": "2026-09-08T08:10:00Z"
+    },
+    {
+      "type": "pipeline",
+      "uuid": "{00000000-0000-4000-8000-000000000181}",
+      "build_number": 181,
+      "run_number": 1,
+      "state": {
+        "name": "COMPLETED",
+        "result": {
+          "name": "SUCCESSFUL"
+        }
+      },
+      "target": {
+        "ref_name": "main"
+      },
+      "trigger": {
+        "type": "pipeline_trigger_parent_step",
+        "name": "PARENT_STEP",
+        "metadata": {
+          "pipeline_uuid": {
+            "type": "pipeline",
+            "uuid": "{00000000-0000-4000-8000-000000000180}"
+          },
+          "step_uuid": {
+            "type": "pipeline_step",
+            "uuid": "{00000000-0000-4000-8000-000000001803}"
+          },
+          "pipeline_run_uuid": "{00000000-0000-4000-8000-000000018000}"
+        }
+      },
+      "created_on": "2026-09-08T08:00:00Z",
+      "completed_on": "2026-09-08T08:10:00Z"
+    },
+    {
+      "type": "pipeline",
+      "uuid": "{00000000-0000-4000-8000-000000000182}",
+      "build_number": 182,
+      "run_number": 1,
+      "state": {
+        "name": "COMPLETED",
+        "result": {
+          "name": "SUCCESSFUL"
+        }
+      },
+      "target": {
+        "ref_name": "main"
+      },
+      "trigger": {
+        "type": "pipeline_trigger_parent_step",
+        "name": "PARENT_STEP",
+        "metadata": {
+          "pipeline_uuid": {
+            "type": "pipeline",
+            "uuid": "{00000000-0000-4000-8000-000000000180}"
+          },
+          "step_uuid": {
+            "type": "pipeline_step",
+            "uuid": "{00000000-0000-4000-8000-000000001804}"
+          },
+          "pipeline_run_uuid": "{00000000-0000-4000-8000-000000018000}"
+        }
+      },
+      "created_on": "2026-09-08T08:00:00Z",
+      "completed_on": "2026-09-08T08:10:00Z"
+    },
+    {
+      "type": "pipeline",
+      "uuid": "{00000000-0000-4000-8000-000000000177}",
+      "build_number": 177,
+      "run_number": 2,
+      "state": {
+        "name": "COMPLETED",
+        "result": {
+          "name": "FAILED"
+        }
+      },
+      "target": {
+        "ref_name": "main"
+      },
+      "trigger": {
+        "type": "pipeline_trigger_push",
+        "name": "PUSH"
+      },
+      "created_on": "2026-09-08T08:00:00Z",
+      "completed_on": "2026-09-08T08:10:00Z"
+    },
+    {
+      "type": "pipeline",
+      "uuid": "{00000000-0000-4000-8000-000000000178}",
+      "build_number": 178,
+      "run_number": 2,
+      "state": {
+        "name": "COMPLETED",
+        "result": {
+          "name": "FAILED"
+        }
+      },
+      "target": {
+        "ref_name": "main"
+      },
+      "trigger": {
+        "type": "pipeline_trigger_parent_step",
+        "name": "PARENT_STEP",
+        "metadata": {
+          "pipeline_uuid": {
+            "type": "pipeline",
+            "uuid": "{00000000-0000-4000-8000-000000000177}"
+          },
+          "step_uuid": {
+            "type": "pipeline_step",
+            "uuid": "{00000000-0000-4000-8000-000000001770}"
+          },
+          "pipeline_run_uuid": "{00000000-0000-4000-8000-000000017700}"
+        }
+      },
+      "created_on": "2026-09-08T08:00:00Z",
+      "completed_on": "2026-09-08T08:10:00Z"
+    },
+    {
+      "type": "pipeline",
+      "uuid": "{00000000-0000-4000-8000-000000000179}",
+      "build_number": 179,
+      "run_number": 1,
+      "state": {
+        "name": "COMPLETED",
+        "result": {
+          "name": "SUCCESSFUL"
+        }
+      },
+      "target": {
+        "ref_name": "main"
+      },
+      "trigger": {
+        "type": "pipeline_trigger_parent_step",
+        "name": "PARENT_STEP",
+        "metadata": {
+          "pipeline_uuid": {
+            "type": "pipeline",
+            "uuid": "{00000000-0000-4000-8000-000000000177}"
+          },
+          "step_uuid": {
+            "type": "pipeline_step",
+            "uuid": "{00000000-0000-4000-8000-000000001774}"
+          },
+          "pipeline_run_uuid": "{00000000-0000-4000-8000-000000017700}"
+        }
+      },
+      "created_on": "2026-09-08T08:00:00Z",
+      "completed_on": "2026-09-08T08:10:00Z"
+    }
+  ],
+  "steps": {
+    "{00000000-0000-4000-8000-000000000180}": [
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001801}",
+        "name": "Secrets scan",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      },
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001802}",
+        "name": "Quality checks",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      },
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001803}",
+        "name": "Engine release",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      },
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001804}",
+        "name": "API release",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      },
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001805}",
+        "name": "Deploy engine",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      },
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001806}",
+        "name": "Deploy API",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      }
+    ],
+    "{00000000-0000-4000-8000-000000000177}": [
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001771}",
+        "name": "Secrets scan",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      },
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001772}",
+        "name": "Quality checks",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      },
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001773}",
+        "name": "Engine release",
+        "run_number": 2,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "FAILED"
+          }
+        }
+      },
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001774}",
+        "name": "API release",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      },
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001775}",
+        "name": "Deploy",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      }
+    ],
+    "{00000000-0000-4000-8000-000000000178}": [
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001781}",
+        "name": "Child step 1",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      },
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001782}",
+        "name": "Child step 2",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      },
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001783}",
+        "name": "Child step 3",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      },
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001784}",
+        "name": "Child step 4",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      },
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001785}",
+        "name": "Child step 5",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      },
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001786}",
+        "name": "Build arm64 image",
+        "run_number": 2,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "FAILED"
+          }
+        }
+      },
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001787}",
+        "name": "Child step 7",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      },
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001788}",
+        "name": "Child step 8",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      }
+    ],
+    "{00000000-0000-4000-8000-000000000181}": [
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001811}",
+        "name": "Engine step 1",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      },
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001812}",
+        "name": "Engine step 2",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      },
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001813}",
+        "name": "Engine step 3",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      },
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001814}",
+        "name": "Engine step 4",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      },
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001815}",
+        "name": "Engine step 5",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      },
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001816}",
+        "name": "Engine step 6",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      },
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001817}",
+        "name": "Engine step 7",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      },
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001818}",
+        "name": "Engine step 8",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      }
+    ],
+    "{00000000-0000-4000-8000-000000000182}": [
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001821}",
+        "name": "API step 1",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      },
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001822}",
+        "name": "API step 2",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      },
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001823}",
+        "name": "API step 3",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      },
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001824}",
+        "name": "API step 4",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      }
+    ],
+    "{00000000-0000-4000-8000-000000000179}": [
+      {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001791}",
+        "name": "Publish API",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "SUCCESSFUL"
+          }
+        }
+      }
+    ]
+  },
+  "earlier": [
+    {
+      "parent": "{00000000-0000-4000-8000-000000000177}",
+      "step": {
+        "type": "pipeline_step",
+        "uuid": "{00000000-0000-4000-8000-000000001770}",
+        "name": "Engine release",
+        "run_number": 1,
+        "state": {
+          "name": "COMPLETED",
+          "result": {
+            "name": "FAILED"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+[package]
+name = "bb-cli"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+readme.workspace = true
+repository.workspace = true
+keywords.workspace = true
+categories.workspace = true
+description.workspace = true
+
+[[bin]]
+name = "bb"
+path = "src/main.rs"
+
+[dependencies]
+bb-api.workspace = true
+anyhow.workspace = true
+clap = { workspace = true, features = ["derive", "env"] }
+clap_complete.workspace = true
+crossterm = { workspace = true, features = ["events", "event-stream", "windows"] }
+directories.workspace = true
+futures-util.workspace = true
+jaq-core.workspace = true
+jaq-json = { workspace = true, features = ["serde"] }
+jaq-std.workspace = true
+keyring-core.workspace = true
+mimalloc.workspace = true
+oauth2.workspace = true
+reqwest = { workspace = true, features = ["rustls", "form"] }
+ratatui = { workspace = true, features = ["crossterm"] }
+rusqlite = { workspace = true, features = ["bundled", "hooks"] }
+sha2.workspace = true
+schemars.workspace = true
+secrecy.workspace = true
+serde = { workspace = true, features = ["derive"] }
+serde_json.workspace = true
+tempfile.workspace = true
+tokio = { workspace = true, features = ["rt-multi-thread", "macros", "time", "signal", "process", "fs", "io-util", "io-std", "net", "sync"] }
+toml.workspace = true
+tracing.workspace = true
+tracing-subscriber = { workspace = true, features = ["env-filter"] }
+url.workspace = true
+unicode-segmentation.workspace = true
+unicode-width.workspace = true
+uuid = { workspace = true, features = ["v4"] }
+webbrowser.workspace = true
+
+[target.'cfg(target_os = "linux")'.dependencies]
+dbus-secret-service-keyring-store = { workspace = true, features = ["crypto-rust"] }
+
+[target.'cfg(target_os = "macos")'.dependencies]
+apple-native-keyring-store = { workspace = true, features = ["keychain"] }
+
+[target.'cfg(target_os = "windows")'.dependencies]
+windows-native-keyring-store.workspace = true
+
+[dev-dependencies]
+wiremock.workspace = true
+jsonschema.workspace = true
+
+[lints]
+workspace = true
