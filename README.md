@@ -19,7 +19,7 @@ bb tui -R acme/widgets
 
 Prebuilt archives require no Rust toolchain. The release matrix covers Linux x86_64/ARM64 and Windows x86_64, with explicit Ubuntu 24.04 and 26.04 checks.
 
-**Development branch:** Windows binaries and `bb skills` will ship in the next release. Published v0.1.2 archives contain Linux binaries only.
+Version 0.1.3 includes Windows binaries and the bundled `bb skills` commands.
 
 On Linux:
 

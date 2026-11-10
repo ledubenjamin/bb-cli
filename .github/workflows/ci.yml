@@ -1,0 +1,120 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  quality:
+    name: Formatting, documentation, and dependencies
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Linux build prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake pkg-config libdbus-1-dev
+      - name: Install Rust
+        run: rustup toolchain install 1.99.0 --profile minimal --component rustfmt,clippy
+      - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2.9.3
+        with:
+          shared-key: ci-quality
+          cache-on-failure: true
+          save-if: ${{ github.ref == 'refs/heads/master' }}
+      - name: Check formatting
+        run: cargo fmt --all --check
+      - name: Check the API library independently
+        run: cargo check -p bb-api --lib --locked
+      - name: Check documentation
+        run: cargo doc --workspace --no-deps --locked
+        env:
+          RUSTDOCFLAGS: -D warnings
+      - uses: taiki-e/install-action@cfdb7ed4ccc7c7dce37759eae89dc5674b469b39 # v2.90.3
+        with:
+          tool: cargo-audit@0.22.1,cargo-machete@0.9.2,actionlint@1.7.12
+          fallback: none
+      - name: Audit dependencies
+        run: cargo audit
+      - name: Check unused dependencies
+        run: cargo machete
+      - name: Check workflow syntax
+        # actionlint 1.7.12 predates GitHub's concurrency.queue property.
+        run: actionlint -ignore 'unexpected key "queue" for "concurrency" section'
+      - name: Test publication, packaging, and terminal harness
+        run: |
+          python3 scripts/test_publish.py
+          python3 scripts/test_package.py
+          python3 crates/bb-cli/tests/test_terminal.py
+
+  native:
+    name: Native checks (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            target: x86_64-unknown-linux-gnu
+            binary: target/debug/bb
+          - os: ubuntu-26.04
+            target: x86_64-unknown-linux-gnu
+            binary: target/debug/bb
+          - os: windows-2025
+            target: x86_64-pc-windows-msvc
+            binary: target/debug/bb.exe
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Linux build prerequisites
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake pkg-config libdbus-1-dev
+      - name: Install Rust
+        run: rustup toolchain install 1.99.0 --profile minimal --component rustfmt,clippy
+      - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2.9.3
+        with:
+          shared-key: ci-${{ matrix.os }}
+          cache-on-failure: true
+          save-if: ${{ github.ref == 'refs/heads/master' }}
+      - name: Strict Clippy
+        run: cargo clippy --workspace --all-targets --locked -- -D warnings
+      - name: Compile tests
+        run: cargo test --workspace --locked --no-run
+      - name: Run tests
+        timeout-minutes: 5
+        run: cargo test --workspace --locked
+      - name: Test Windows Credential Manager
+        if: runner.os == 'Windows'
+        timeout-minutes: 5
+        run: cargo test -p bb-cli --locked native_windows_keyring_round_trip -- --ignored
+      - name: Build the native CLI
+        run: cargo build -p bb-cli --locked
+      - name: Package and test the native installer
+        run: |
+          python scripts/test_package.py
+          python scripts/package.py --target '${{ matrix.target }}' --binary '${{ matrix.binary }}' --output dist
+          python scripts/test_install.py --target '${{ matrix.target }}' --dist dist
+      - name: Test PowerShell 7 installer
+        if: runner.os == 'Windows'
+        run: python scripts/test_install.py --target '${{ matrix.target }}' --dist dist --powershell pwsh

@@ -3,7 +3,7 @@
 
 Download a ready-to-run binary from the [latest release](https://github.com/ledubenjamin/bb-cli/releases/latest). **Rust is not required.** Install Git for clone, checkout, rebase, and remote detection. The release matrix covers Linux x86_64/ARM64 and Windows x86_64. Ubuntu 24.04 and 26.04 are tested explicitly. macOS has no prebuilt release; build from source and validate it in your environment.
 
-**Development branch:** Windows binaries and `bb skills` will ship in the next release. Published v0.1.2 archives contain Linux binaries only.
+Version 0.1.3 includes Windows binaries and the bundled `bb skills` commands.
 
 ## Linux x86_64 and ARM64
 
@@ -41,7 +41,7 @@ Check your installed version with `bb --version` and compare it with the [latest
 To install a particular version, use its installer and pass its tag:
 
 ```sh
-curl -fsSL https://github.com/ledubenjamin/bb-cli/releases/download/v0.1.2/install.sh | BB_VERSION=v0.1.2 sh
+curl -fsSL https://github.com/ledubenjamin/bb-cli/releases/download/v0.1.3/install.sh | BB_VERSION=v0.1.3 sh
 ```
 
 Previews such as `v0.2.0-rc.1` require an explicit version; the default installer follows stable releases.

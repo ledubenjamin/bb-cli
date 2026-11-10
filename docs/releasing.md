@@ -5,11 +5,11 @@
 2. Tag that commit with the matching version and push the tag:
 
    ```sh
-   git tag -a v0.2.0 -m "Release v0.2.0"
-   git push origin v0.2.0
+   git tag -a v0.1.3 -m "Release v0.1.3"
+   git push origin v0.1.3
    ```
 
-The [Release workflow](../.github/workflows/release.yml) checks that the tag matches Cargo's version, tests and builds Linux x86_64/ARM64 and Windows x86_64, packages the binaries, and tests installation and updates from each archive. Linux archives are built on Ubuntu 22.04 and exercised unchanged on Ubuntu 24.04 and 26.04 for both architectures. Windows checks cover both PowerShell 5.1 and 7. Once all builds and archive checks succeed, it uploads the archives, checksums, installers, and generated release notes, then **publishes the release automatically**. A newer stable version becomes **Latest**; finishing an older build later does not replace it. Tags containing a prerelease suffix are marked as prereleases. The repository's `GITHUB_TOKEN` supplies the required release permission.
+The [Release workflow](../.github/workflows/release.yml) checks that the tag matches Cargo's version, tests and builds Linux x86_64/ARM64 and Windows x86_64, packages the binaries, and tests installation and updates from each archive. Linux archives are built on Ubuntu 22.04 and exercised unchanged on Ubuntu 24.04 and 26.04 for both architectures. Windows checks cover both PowerShell 5.1 and 7. Once all builds and archive checks succeed, it uploads the archives, checksums, installers, and the matching `## [VERSION]` section from CHANGELOG.md as release notes, then **publishes the release automatically**. Missing or empty release notes prevent publication. A newer stable version becomes **Latest**; finishing an older build later does not replace it. Tags containing a prerelease suffix are marked as prereleases. The repository's `GITHUB_TOKEN` supplies the required release permission only to the publication job.
 
 You can also choose **Actions → Release → Run workflow** and enter an existing version tag. A failed upload leaves a draft that a rerun can finish; an already published release keeps its assets unchanged. Publish a new version tag to distribute another build. Ordinary branch pushes run CI; they do not publish a release.
 

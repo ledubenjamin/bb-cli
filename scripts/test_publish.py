@@ -18,6 +18,13 @@ class PublishTests(unittest.TestCase):
         self.directory = Path(temporary.name)
         self.root = Path(__file__).resolve().parents[1]
         shutil.copytree(self.root / "scripts", self.directory / "scripts")
+        versions = ("0.1.0", "0.2.0-rc.1+build.2", "0.1.0+build-2", "0.10.0")
+        (self.directory / "CHANGELOG.md").write_text(
+            "# Changelog\n\n" + "\n".join(
+                f"## [{version}] - 2026-11-10\n\nNotes for {version}.\n"
+                for version in versions
+            ), encoding="utf-8",
+        )
         dist = self.directory / "dist"
         dist.mkdir()
         for archive in ("bb-0.1.0-x86_64-unknown-linux-gnu.tar.gz", "bb-0.1.0-x86_64-pc-windows-msvc.zip"):
@@ -30,10 +37,14 @@ class PublishTests(unittest.TestCase):
         gh.write_text('''#!/usr/bin/env python3
 import json
 import os
+from pathlib import Path
 import sys
 
 with open(os.environ["BB_TEST_CALLS"], "a") as log:
     log.write(json.dumps(sys.argv[1:]) + "\\n")
+if "--notes-file" in sys.argv:
+    notes = Path(sys.argv[sys.argv.index("--notes-file") + 1]).read_bytes()
+    Path(os.environ["BB_TEST_CALLS"]).with_suffix(".notes").write_bytes(notes)
 if sys.argv[1] == "api":
     if os.environ.get("BB_TEST_FAIL_LIST"):
         sys.exit(1)
@@ -66,6 +77,8 @@ elif sys.argv[1:3] == ["release", "upload"] and os.environ.get("BB_TEST_FAIL_UPL
         ])
         self.assertIn("--draft", calls[1])
         self.assertIn("--verify-tag", calls[1])
+        self.assertIn("--notes-file", calls[1])
+        self.assertEqual((self.directory / "calls.notes").read_text(), "Notes for 0.1.0.\n")
         self.assertIn("--draft=false", calls[-1])
         self.assertIn("--latest=true", calls[-1])
         self.assertEqual((self.directory / "dist/VERSION").read_text(), "v0.1.0\n")
@@ -127,6 +140,16 @@ elif sys.argv[1:3] == ["release", "upload"] and os.environ.get("BB_TEST_FAIL_UPL
         self.environment["BB_TEST_RELEASE"] = "draft"
         calls = self.publish()
         self.assertEqual([call[0] if call[0] == "api" else call[1] for call in calls], ["view", "upload", "api", "edit"])
+        self.assertIn("--notes-file", calls[-1])
+        self.assertEqual((self.directory / "calls.notes").read_text(), "Notes for 0.1.0.\n")
+
+    def test_missing_version_notes_never_contacts_github(self):
+        self.environment["RELEASE_TAG"] = "v9.9.9"
+        self.assertEqual(self.publish(False), [])
+
+    def test_empty_version_notes_never_contacts_github(self):
+        (self.directory / "CHANGELOG.md").write_text("## [0.1.0]\n\n## [0.0.9]\nOlder notes.\n")
+        self.assertEqual(self.publish(False), [])
 
     def test_published_release_keeps_existing_assets(self):
         self.environment["BB_TEST_RELEASE"] = "published"
